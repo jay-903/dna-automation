@@ -1,6 +1,6 @@
 // Verify we're on the correct website
 if (!globalThis.location.hostname.includes('wjx.cn')) {
-  console.error('❌ This script only works on wjx.cn survey platform!');
+  console.error('This script only works on wjx.cn survey platform!');
   throw new Error('Invalid website - script aborted');
 }
 
@@ -123,4 +123,4 @@ for (const field of document.querySelectorAll('.field[topic]')) {
   }
 }
 
-console.log('✅ Autofill complete!');
+console.log('Autofill complete!');
