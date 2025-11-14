@@ -30,9 +30,11 @@ Automatically fills out survey forms on wjx.cn with random selections.
 
 Unlocks all 17 character roles in the divination event on dna-panstudio.com.
 
+**Event URL:** https://duetnightabyss.dna-panstudio.com/divination/
+
 **How to use:**
 
-1. Go to the divination event page
+1. Go to the divination event page (link above)
 2. Open console (F12)
 3. Copy and paste this code, then press Enter:
 

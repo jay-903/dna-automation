@@ -22,6 +22,7 @@ const scripts = [
     id: 'divination',
     title: 'Divination Bot',
     description: 'Unlock all 17 character roles in the divination event on dna-panstudio.com',
+    eventUrl: 'https://duetnightabyss.dna-panstudio.com/divination/',
     code: "fetch('https://getthevoid.github.io/dna-automation/scripts/events/divination.js').then(r=>r.text()).then(eval);",
     source: '/dna-automation/scripts/events/divination.js'
   }
@@ -63,6 +64,17 @@ const handleCopy = (id: string, title: string) => {
             <CardDescription>{{ script.description }}</CardDescription>
           </CardHeader>
           <CardContent class="space-y-3">
+            <div v-if="script.eventUrl" class="text-muted-foreground text-sm">
+              <span class="font-medium">Event URL:</span>
+              <a
+                :href="script.eventUrl"
+                target="_blank"
+                class="hover:text-primary ml-1 inline-flex items-center gap-1 hover:underline"
+              >
+                {{ script.eventUrl }}
+                <ExternalLink class="h-3 w-3" />
+              </a>
+            </div>
             <div class="relative">
               <CodeBlock :code="script.code" lang="javascript" theme="github-dark" />
               <Button
