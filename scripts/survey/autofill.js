@@ -1,3 +1,9 @@
+// Verify we're on the correct website
+if (!globalThis.location.hostname.includes('wjx.cn')) {
+  console.error('❌ This script only works on wjx.cn survey platform!');
+  throw new Error('Invalid website - script aborted');
+}
+
 // Utility: Random integer between 0 and max-1
 const randIndex = max => Math.floor(Math.random() * max);
 
@@ -19,6 +25,9 @@ const getRandomElements = (arr, count) => {
 
 // Utility: Trigger an event
 const trigger = (el, type) => el.dispatchEvent(new Event(type, { bubbles: true }));
+
+console.log('🎮 DNA Survey Autofill Script');
+console.log('📍 Running on:', globalThis.location.hostname);
 
 // === MAIN SCRIPT ===
 for (const field of document.querySelectorAll('.field[topic]')) {
@@ -113,3 +122,5 @@ for (const field of document.querySelectorAll('.field[topic]')) {
     }
   }
 }
+
+console.log('✅ Autofill complete!');
