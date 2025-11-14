@@ -88,6 +88,53 @@ if (!globalThis.location.hostname.includes('dna-panstudio.com')) {
     return null;
   };
 
+  // Helper functions for run()
+  const logInitialStatus = (unlockedCount, unlockedRoles, lockedRoles) => {
+    console.log(`Initial: ${unlockedCount}/${TOTAL_ROLES} unlocked`);
+    console.log(`Unlocked: [${unlockedRoles.join(', ')}]`);
+    console.log(`Locked: [${lockedRoles.join(', ')}]`);
+    console.log('-'.repeat(50));
+  };
+
+  const handleUnlockResult = async (result, unlockedCount) => {
+    const userInfo = await getUserInfo();
+    if (!userInfo) return unlockedCount;
+
+    const newCount = countUnlockedRoles(userInfo);
+    if (newCount > unlockedCount) {
+      successfulUnlocks++;
+      console.log(`Unlocked: ${result.role_name} (${newCount}/${TOTAL_ROLES})`);
+      return newCount;
+    }
+
+    console.log(`Duplicate: ${result.role_name}`);
+    return unlockedCount;
+  };
+
+  const tryUnlockRole = async (role, unlockedCount) => {
+    console.log(`\nTrying: ${role.name}`);
+    const result = await submitDivination(answersToFormData(role.answers));
+
+    if (result) return await handleUnlockResult(result, unlockedCount);
+
+    failedAttempts++;
+    console.log('Failed');
+    return unlockedCount;
+  };
+
+  const logSummary = async () => {
+    const final = await getUserInfo();
+    if (!final) return;
+
+    const count = countUnlockedRoles(final);
+    console.log('\n' + '-'.repeat(50));
+    console.log(
+      `Finished: ${count}/${TOTAL_ROLES} | New: ${successfulUnlocks} | Failed: ${failedAttempts}`
+    );
+    if (count >= TOTAL_ROLES) console.log('All unlocked!');
+    console.log('-'.repeat(50));
+  };
+
   // Main bot function
   const run = async () => {
     if (isRunning) {
@@ -100,7 +147,6 @@ if (!globalThis.location.hostname.includes('dna-panstudio.com')) {
     console.log('Running on:', globalThis.location.hostname);
     console.log('-'.repeat(50));
 
-    // Get initial user info
     const initialUserInfo = await getUserInfo();
     if (!initialUserInfo) {
       console.error('Failed to get user info');
@@ -114,57 +160,21 @@ if (!globalThis.location.hostname.includes('dna-panstudio.com')) {
       i => !unlockedRoles.includes(i)
     );
 
-    console.log(`Initial: ${unlockedCount}/${TOTAL_ROLES} unlocked`);
-    console.log(`Unlocked: [${unlockedRoles.join(', ')}]`);
-    console.log(`Locked: [${lockedRoles.join(', ')}]`);
-    console.log('-'.repeat(50));
+    logInitialStatus(unlockedCount, unlockedRoles, lockedRoles);
 
-    // Unlock each role with known answers
     for (const [i, role] of ROLE_ANSWERS.entries()) {
       if (!isRunning) break;
 
-      const roleNumber = i + 1;
-
-      if (unlockedRoles.includes(roleNumber)) {
+      if (unlockedRoles.includes(i + 1)) {
         console.log(`Skip: ${role.name}`);
         continue;
       }
 
-      console.log(`\nTrying: ${role.name}`);
-      const result = await submitDivination(answersToFormData(role.answers));
-
-      if (result) {
-        const userInfo = await getUserInfo();
-        if (userInfo) {
-          const newCount = countUnlockedRoles(userInfo);
-          if (newCount > unlockedCount) {
-            successfulUnlocks++;
-            console.log(`Unlocked: ${result.role_name} (${newCount}/${TOTAL_ROLES})`);
-            unlockedCount = newCount;
-          } else {
-            console.log(`Duplicate: ${result.role_name}`);
-          }
-        }
-      } else {
-        failedAttempts++;
-        console.log('Failed');
-      }
-
+      unlockedCount = await tryUnlockRole(role, unlockedCount);
       if (i < ROLE_ANSWERS.length - 1) await sleep(DELAY);
     }
 
-    // Summary
-    const final = await getUserInfo();
-    if (final) {
-      const count = countUnlockedRoles(final);
-      console.log('\n' + '-'.repeat(50));
-      console.log(
-        `Finished: ${count}/${TOTAL_ROLES} | New: ${successfulUnlocks} | Failed: ${failedAttempts}`
-      );
-      if (count >= TOTAL_ROLES) console.log('All unlocked!');
-      console.log('-'.repeat(50));
-    }
-
+    await logSummary();
     isRunning = false;
   };
 
