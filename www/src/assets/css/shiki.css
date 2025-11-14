@@ -1,0 +1,13 @@
+.shiki,
+.shiki code {
+  font-family: var(--font-mono);
+}
+
+.shiki .line {
+  padding-inline: calc(var(--spacing) * 6);
+}
+
+html.dark .shiki,
+html.dark .shiki span {
+  background-color: var(--color-border) !important;
+}

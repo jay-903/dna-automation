@@ -26,7 +26,7 @@ Automatically fills out survey forms on wjx.cn with random selections.
 
 ### Divination Bot
 
-**File:** `scripts/events/divination-bot.js`
+**File:** `scripts/events/divination.js`
 
 Unlocks all 17 character roles in the divination event on dna-panstudio.com.
 
@@ -37,7 +37,7 @@ Unlocks all 17 character roles in the divination event on dna-panstudio.com.
 3. Copy and paste this code, then press Enter:
 
    ```javascript
-   fetch('https://getthevoid.github.io/dna-automation/scripts/events/divination-bot.js')
+   fetch('https://getthevoid.github.io/dna-automation/scripts/events/divination.js')
      .then(r => r.text())
      .then(eval);
    ```

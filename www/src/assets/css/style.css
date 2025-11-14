@@ -4,6 +4,7 @@
 @import './config.css';
 @import './theme.css';
 @import './fonts.css';
+@import './shiki.css';
 
 @custom-variant dark (&:is(.dark *));
 

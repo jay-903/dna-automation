@@ -6,6 +6,7 @@ import { useClipboard } from '@vueuse/core';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { CodeBlock } from '@/components/ui/code';
 import { Copy, Check, ExternalLink, Github, AlertCircle } from 'lucide-vue-next';
 import { toast } from 'vue-sonner';
 
@@ -21,8 +22,8 @@ const scripts = [
     id: 'divination',
     title: 'Divination Bot',
     description: 'Unlock all 17 character roles in the divination event on dna-panstudio.com',
-    code: "fetch('https://getthevoid.github.io/dna-automation/scripts/events/divination-bot.js').then(r=>r.text()).then(eval);",
-    source: '/dna-automation/scripts/events/divination-bot.js'
+    code: "fetch('https://getthevoid.github.io/dna-automation/scripts/events/divination.js').then(r=>r.text()).then(eval);",
+    source: '/dna-automation/scripts/events/divination.js'
   }
 ];
 
@@ -62,8 +63,8 @@ const handleCopy = (id: string, title: string) => {
             <CardDescription>{{ script.description }}</CardDescription>
           </CardHeader>
           <CardContent class="space-y-3">
-            <div class="bg-foreground/10 relative rounded-md p-3">
-              <code class="block overflow-x-auto pr-20 text-xs">{{ script.code }}</code>
+            <div class="relative">
+              <CodeBlock :code="script.code" lang="javascript" theme="github-dark" />
               <Button
                 @click="handleCopy(script.id, script.title)"
                 size="icon-sm"
